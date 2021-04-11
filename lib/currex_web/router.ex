@@ -17,7 +17,7 @@ defmodule CurrexWeb.Router do
   scope "/", CurrexWeb do
     pipe_through :browser
 
-    live "/", PageLive, :index
+    live "/", WelcomeLive.Index, :index
   end
 
   # Other scopes may use custom stacks.

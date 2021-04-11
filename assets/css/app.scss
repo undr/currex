@@ -1,6 +1,72 @@
 /* This file is for your main application css. */
-@import "./phoenix.css";
+// @import "./phoenix.css";
 
+@import "variables";
+@import "@fortawesome/fontawesome-free/scss/brands";
+@import "@fortawesome/fontawesome-free/scss/regular";
+@import "@fortawesome/fontawesome-free/scss/solid";
+@import "@fortawesome/fontawesome-free/scss/fontawesome";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind screens;
+
+.app-toggle {
+  @apply m-2 px-1 w-14 h-7 flex items-center rounded-full shadow-inner cursor-pointer;
+
+  .app-toggle-inner-on {
+    @apply bg-white w-5 h-5 rounded-full shadow-md transform translate-x-5;
+  }
+  .app-toggle-inner-off {
+    @apply bg-white w-5 h-5 rounded-full shadow-md transform;
+  }
+}
+
+.app-currency {
+  @apply bg-gray-100 hover:bg-white rounded flex items-center justify-between p-2 m-3 h-full shadow-md;
+
+  .app-currency-code {
+    @apply flex-none w-20 font-medium;
+  }
+
+  .app-currency-code-circle {
+    @apply p-1 h-11 w-11 rounded-full flex items-center bg-green-500 text-white shadow-inner;
+  }
+
+  .app-currency-title {
+    @apply flex-1 text-gray-600;
+  }
+
+  .app-currency-rate {
+    @apply flex-1 font-medium;
+  }
+
+  .app-currency-remove {
+    @apply cursor-pointer w-6 h-6 flex-shrink-0 mx-4 text-gray-500 focus:outline-none;
+  }
+}
+
+.app-selector {
+  @apply m-2 p-1 bg-white flex border border-gray-200 rounded;
+
+  .app-selector-input {
+    @apply p-1 px-2 appearance-none outline-none w-full text-gray-800;
+  }
+
+  .app-selector-chevron-wrapper {
+    @apply text-gray-300 w-8 py-1 pl-2 pr-1 border-l flex items-center border-gray-200;
+
+    button {
+      @apply cursor-pointer w-6 h-6 text-gray-600 outline-none focus:outline-none;
+    }
+  }
+}
+
+.app-selector-suggestions {
+  @apply absolute shadow bg-white z-40 max-h-80 ml-2 mr-2 left-0 right-0 rounded overflow-y-auto;
+  overflow-x: hidden;
+}
 /* LiveView specific classes for your customizations */
 .phx-no-feedback.invalid-feedback,
 .phx-no-feedback .invalid-feedback {

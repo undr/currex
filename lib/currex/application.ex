@@ -12,9 +12,9 @@ defmodule Currex.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Currex.PubSub},
       # Start the Endpoint (http/https)
-      CurrexWeb.Endpoint
-      # Start a worker by calling: Currex.Worker.start_link(arg)
-      # {Currex.Worker, arg}
+      CurrexWeb.Endpoint,
+      Currex.Currencies.CurrenciesStorage,
+      Currex.Currencies.RatesCache
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

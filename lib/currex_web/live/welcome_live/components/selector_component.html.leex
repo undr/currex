@@ -1,0 +1,48 @@
+<div id="<% @id %>">
+  <div class="app-selector">
+    <div class="flex flex-auto flex-wrap"></div>
+    <input
+      class="app-selector-input"
+      placeholder="<%= @placeholder %>"
+      value="<%= @query %>"
+      autocomplete="off"
+      phx-focus="focus"
+      phx-blur="blur"
+      phx-target="<%= @myself %>"
+    >
+    <div class="app-selector-chevron-wrapper">
+      <button phx-click="toggle_items" phx-target="<%= @myself %>">
+        <i class="<%= chevron_class(@suggestions) %>"></i>
+      </button>
+    </div>
+  </div>
+
+  <%= unless Enum.empty?(@suggestions) do %>
+    <div class="relative">
+      <div class="app-selector-suggestions">
+        <div class="flex flex-col w-full">
+          <%= for item <- @suggestions do %>
+            <div class="cursor-pointer w-full mt-1 md-1 border-gray-100 rounded-b hover:bg-gray-100">
+              <div class="flex w-full items-center p-3 border-transparent border-l-2 relative hover:border-teal-100">
+                <div
+                  id="item-<%= item.code %>"
+                  class="w-full items-center flex"
+                  phx-hook="SelectorClickOnItem"
+                  phx-value-id="<%= item.code %>"
+                  phx-target="<%= @myself %>"
+                >
+                  <div class="-mt-1 whitespace-nowrap">
+                    <%= item.code %>
+                    <span class="text-s w-full normal-case font-normal ml-2 -mt-1 text-gray-500 overflow-ellipsis overflow-x-hidden">
+                      <%= item.name %>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

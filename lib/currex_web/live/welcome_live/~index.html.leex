@@ -1,0 +1,42 @@
+<div
+  id="currency-selector"
+  class="liveview-select2"
+  phx-hook="Select2Component"
+  data-phxevent="currency_selected"
+>
+  <select name="currency">
+    <option value=""></option>
+    <%= for c <- @currencies do %>
+      <option id="currency-<%= c.code %>" value="<%= c.code %>">
+        <%= c.name %> (<%= c.code %>)
+      </option>
+    <% end %>
+  </select>
+</div>
+
+<div
+  id="base-selector"
+  class="liveview-select2"
+  phx-hook="Select2Component"
+  phx-update="ignore"
+  data-phxevent="base_selected"
+>
+  <select name="base">
+    <%= for c <- @all_currencies do %>
+      <option
+        id="base-<%= c.code %>"
+        value="<%= c.code %>"
+      >
+        <%= c.name %> (<%= c.code %>)
+      </option>
+    <% end %>
+  </select>
+</div>
+
+<div>
+  <ul phx-update="append">
+    <%= for c <- @rates do %>
+      <li id="rate-<%= c.code %>"><%= c.name %> (<%= c.code %>) <%= c.rate %></li>
+    <% end %>
+  </ul>
+</div>

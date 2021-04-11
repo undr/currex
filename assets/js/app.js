@@ -17,8 +17,41 @@ import {Socket} from "phoenix"
 import topbar from "topbar"
 import {LiveSocket} from "phoenix_live_view"
 
+let Hooks = {}
+Hooks.SelectorClickOnItem = {
+  clickEventName: "mousedown",
+  selectEventName: "select",
+  idAttribute: "phx-value-id",
+  targetAttribute: "phx-target",
+
+  init() {
+    let hook = this
+    hook.eventListener = () => hook.select(hook)
+    hook.el.addEventListener(hook.clickEventName, hook.eventListener)
+  },
+
+  destroyed() {
+    this.el.removeEventListener(this.clickEventName, this.eventListener)
+  },
+
+  mounted() {
+    this.init()
+  },
+
+  updated() {
+    this.init()
+  },
+
+  select(hook) {
+    let id = hook.el.getAttribute(hook.idAttribute)
+    let target = hook.el.getAttribute(hook.targetAttribute)
+
+    hook.pushEventTo(target, hook.selectEventName, {id: id})
+  }
+}
+
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
-let liveSocket = new LiveSocket("/live", Socket, {params: {_csrf_token: csrfToken}})
+let liveSocket = new LiveSocket("/live", Socket, {params: {_csrf_token: csrfToken}, hooks: Hooks})
 
 // Show progress bar on live navigation and form submits
 topbar.config({barColors: {0: "#29d"}, shadowColor: "rgba(0, 0, 0, .3)"})
@@ -33,4 +66,3 @@ liveSocket.connect()
 // >> liveSocket.enableLatencySim(1000)  // enabled for duration of browser session
 // >> liveSocket.disableLatencySim()
 window.liveSocket = liveSocket
-

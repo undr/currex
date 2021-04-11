@@ -28,6 +28,18 @@ module.exports = (env, options) => {
     module: {
       rules: [
         {
+          test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+          use: [
+            {
+              loader: 'file-loader',
+              options: {
+                name: '[name].[ext]',
+                outputPath: '../fonts'
+              }
+            }
+          ]
+        },
+        {
           test: /\.js$/,
           exclude: /node_modules/,
           use: {
@@ -39,7 +51,8 @@ module.exports = (env, options) => {
           use: [
             MiniCssExtractPlugin.loader,
             'css-loader',
-            'sass-loader',
+            'postcss-loader',
+            'sass-loader'
           ],
         }
       ]
