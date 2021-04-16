@@ -1,6 +1,4 @@
 defmodule Currex.Currencies.CurrenciesStorage do
-  @default_currencies ["RUB", "THB", "EUR"]
-
   use Agent
 
   alias Currex.Currencies.Currency
@@ -8,7 +6,10 @@ defmodule Currex.Currencies.CurrenciesStorage do
 
   def start_link(_arg) do
     state = Data.currencies()
-    |> Enum.map(fn({code, name}) -> {code, %Currency{code: code, name: name, selected: code in @default_currencies}} end)
+    |> Enum.map(fn({code, name}) ->
+      selected = code in Data.default_currency_codes()
+      {code, %Currency{code: code, name: name, selected: selected}}
+    end)
     |> Enum.into(%{})
 
     Agent.start_link(fn -> state end, name: __MODULE__)

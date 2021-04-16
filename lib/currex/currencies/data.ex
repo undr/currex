@@ -9,4 +9,7 @@ defmodule Currex.Currencies.Data do
 
   def currency_codes,
     do: Enum.map(currencies(), &(elem(&1, 0)))
+
+  def default_currency_codes,
+    do: ["RUB", "THB", "EUR"]
 end
