@@ -13,35 +13,22 @@ import "../css/app.scss"
 //     import socket from "./socket"
 //
 import "phoenix_html"
-import "alpinejs"
 import {Socket} from "phoenix"
 import topbar from "topbar"
 import {LiveSocket} from "phoenix_live_view"
+import Selector from "./selector";
+import morphdomCallbacks from "./morphdom_callbacks";
 
-let Hooks = {}
-
-Hooks.Selector = {
-  mounted() {
-    window.SelectorHook = this;
-  },
-
-  destroyed() {
-    window.SelectorHook = null;
-  }
-}
+const hooks = {
+  Selector: Selector
+};
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let liveSocket = new LiveSocket("/live", Socket, {
-  dom: {
-    onBeforeElUpdated(from, to) {
-      if (from.__x) {
-        window.Alpine.clone(from.__x, to);
-      }
-    },
-  },
+  dom: morphdomCallbacks,
   params: {_csrf_token: csrfToken},
-  hooks: Hooks
-})
+  hooks: hooks
+});
 
 // Show progress bar on live navigation and form submits
 topbar.config({barColors: {0: "#29d"}, shadowColor: "rgba(0, 0, 0, .3)"})

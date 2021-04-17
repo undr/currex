@@ -12,6 +12,10 @@
 @tailwind utilities;
 @tailwind screens;
 
+[data-js-hidden] {
+  @apply hidden;
+}
+
 .app-toggle {
   @apply m-2 px-1 w-14 h-7 flex items-center rounded-full shadow-inner cursor-pointer;
 
